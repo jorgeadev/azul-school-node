@@ -3,20 +3,20 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT;
 const moviesAPI = require('./routes/movies');
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
+const mongoose = require('mongoose');
 const url = process.env.DB;
 
-// Database Name
-const dbName = 'course-node-azul-school';
-const client = new MongoClient(url);
-// Use connect method to connect to the server
-client.connect(function(err) {
-    assert.equal(null, err);
-    console.log('Connected successfully to server!');
-    const db = client.db(dbName);
-    client.close();
+mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
 });
+
+const Cat = mongoose.model('Cat', { name: String });
+const kitty = new Cat({ name: 'Vito Firulito' });
+kitty.save().then(() => console.log('meow'));
+
 moviesAPI(app);
 
 app.listen(PORT, () => {
