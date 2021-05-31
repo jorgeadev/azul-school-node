@@ -1,0 +1,18 @@
+{
+    "name": "movies-api",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "dev": "nodemon index.js"
+    },
+    "dependencies": {
+        "assert": "^2.0.0",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "mongodb": "^3.6.9"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.7"
+    }
+}
