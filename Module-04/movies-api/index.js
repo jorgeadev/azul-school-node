@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT;
@@ -6,16 +7,15 @@ const moviesAPI = require('./routes/movies');
 const mongoose = require('mongoose');
 const url = process.env.DB;
 
-mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-const Cat = mongoose.model('Cat', { name: String });
-const kitty = new Cat({ name: 'Vito Firulito' });
-kitty.save().then(() => console.log('meow'));
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+    .then(res => {
+        console.log('Connected to database! ' + res.connections[0].name);
+    }).catch(err => {
+        console.log('Error to connect to database!');
+    });
 
 moviesAPI(app);
 

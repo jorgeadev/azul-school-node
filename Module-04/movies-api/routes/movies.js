@@ -1,24 +1,25 @@
 const express = require('express');
-const { getAllMovies, getOneMovie, createMovie, updateMovie, deleteMovie } = require('../controllers/moviesControllers');
+const { getAllMovies, getOneMovie, createMovie, updateMovie, deleteMovie, getMovies } = require('../controllers/moviesControllers');
 
 function moviesAPI(app) {
     /* CRUD */
     const router = express.Router();
 
-    /***** READ *****/
     app.use('/api/movies', router);
+
+    /***** READ ALL MOVIES *****/
     router.get('/', getAllMovies);
 
     /***** READ ONE MOVIE *****/
     router.get('/:movieId', getOneMovie);
 
-    /***** CREATE *****/
+    /***** CREATE MOVIE *****/
     router.post('/', createMovie);
 
-    /***** UPDATE *****/
+    /***** UPDATE MOVIE *****/
     router.put('/:movieId', updateMovie);
 
-    /***** DELETE *****/
+    /***** DELETE MOVIE *****/
     router.delete('/:movieId', deleteMovie);
 }
 

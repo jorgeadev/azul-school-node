@@ -1,14 +1,14 @@
-const MoviesServices = require('../services/movie-services');
+const MoviesServices = require('../services/movieServices');
 const moviesServices = new MoviesServices();
 
 
 const getAllMovies = async (req, res, next) => {
+    const { tags } = req.query;
     try {
-        const tags = req.query;
-        const movies = await moviesServices.getMoviesServices({ tags });
+        const movies = await moviesServices.getAllMoviesServices(tags);
         res.status(200).json({
             data: movies,
-            message: 'Movies loaded successfully!'
+            message: 'All movies loaded successfully!'
         });
     }catch (err) {
         next(err);
@@ -20,7 +20,7 @@ const getOneMovie = async (req, res, next) => {
     try {
         const movie = await moviesServices.getOneMoviesServices(movieId);
         res.status(200).json({
-            data: movie[0],
+            data: movie,
             message: 'Movie loaded successfully!'
         });
     }catch (err) {
@@ -29,11 +29,11 @@ const getOneMovie = async (req, res, next) => {
 };
 
 const createMovie = async (req, res, next) => {
-    const { body:movie } = req;
-    const createMovie = await moviesServices.createMovieServices({ movie });
+    const { body: movie } = req;
+    const createMovie = await moviesServices.createMovieServices(movie);
     try {
         res.status(201).json({
-            data: createMovie.movies[0].id,
+            data: createMovie,
             message: 'Movie created successfully!'
         });
     } catch (err) {
@@ -47,7 +47,7 @@ const updateMovie = async (req, res, next) => {
     const updateMovie = await moviesServices.updateMovieServices({ movieId, movie });
     try {
         res.status(200).json({
-            data: updateMovie.movies[0].id,
+            data: updateMovie,
             message: 'Movie updated successfully!'
         });
     } catch (err) {
@@ -57,10 +57,10 @@ const updateMovie = async (req, res, next) => {
 
 const deleteMovie = async (req, res, next) => {
     const { movieId } = req.params;
-    const deleteMovie = await moviesServices.deleteMovieServices({ movieId });
+    const deleteMovie = await moviesServices.deleteMovieServices( movieId );
     try {
         res.status(201).json({
-            data: deleteMovie.movies[0].id,
+            data: deleteMovie,
             message: 'Movie delete successfully!'
         });
     } catch (err) {
