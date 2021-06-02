@@ -5,6 +5,7 @@ const moviesServices = new MoviesServices();
 const getAllMovies = async (req, res, next) => {
     const { tags } = req.query;
     try {
+        throw new Error('Error getting movies...')
         const movies = await moviesServices.getAllMoviesServices(tags);
         res.status(200).json({
             data: movies,
